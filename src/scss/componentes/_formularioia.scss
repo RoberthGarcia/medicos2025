@@ -1,0 +1,395 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario {
+    margin-top: 5rem;
+    width: 100%;
+}
+
+.campo {
+    display: flex;
+    margin-bottom: 2rem;
+    align-items: center;
+    label {
+        flex:0 0 10rem ;
+    }
+    
+    input {
+        flex: 1;
+        border: none;
+        padding: calc(v.$separacion/4);
+        border-radius: 1rem;
+
+        &:disabled {
+            background-color: lighten(v.$negro, 30%);
+            color: v.$blanco;
+            cursor: not-allowed; 
+        }
+    }
+}
+
+
+// Empieza la IA
+
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(v.$gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(v.$shadow-lg);
+            overflow: hidden;
+        }
+
+        .header-formulario {
+            background: linear-gradient(135deg, var(v.$primary-color) 0%, var(v.$primary-dark) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header-formulario h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header-formulario p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 30px 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(v.$primary-color);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(v.$gray-200);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-grid.full {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(v.$gray-700);
+            display: flex;
+            gap: 5px;
+        }
+
+        .required {
+            color: var(v.$danger-color);
+            font-weight: 700;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            padding: 12px;
+            border: 2px solid var(v.$gray-200);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: var(v.$transition);
+            background-color: var(v.$gray-50);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(v.$primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            border: 2px dashed var(v.$gray-300);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(v.$transition);
+        }
+
+        input[type="file"]:hover {
+            border-color: var(v.$primary-color);
+            background-color: var(v.$gray-50);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(v.$primary-color);
+        }
+
+        .checkbox-label,
+        .radio-label {
+            font-size: 14px;
+            color: var(v.$gray-700);
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background-color: var(v.$gray-50);
+            border-left: 4px solid var(v.$primary-color);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(v.$gray-700);
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(v.$transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        @media (max-width: 640px) {
+            button {
+                flex: 1 1 100%;
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(v.$primary-color) 0%, var(v.$primary-dark) 100%);
+            color: white;
+            box-shadow: var(v.$shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(v.$shadow-lg);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(v.$gray-200);
+            color: var(v.$gray-800);
+        }
+
+        .btn-secondary:hover {
+            background: var(v.$gray-300);
+        }
+
+        .error-message {
+            color: var(v.$danger-color);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: var(v.$danger-color);
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, var(v.$secondary-color) 0%, #059669 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .section-title {
+                font-size: 16px;
+                margin-top: 25px;
+                margin-bottom: 15px;
+            }
+
+            .form-grid {
+                gap: 15px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 8px;
+            }
+
+            .form-container {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 15px;
+                margin-top: 20px;
+                margin-bottom: 12px;
+            }
+
+            .form-grid {
+                gap: 12px;
+            }
+
+            label {
+                font-size: 13px;
+            }
+
+            input,
+            select,
+            textarea {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            button {
+                padding: 10px 16px;
+                font-size: 12px;
+                min-width: 120px;
+            }
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 5px;
+        }
+
+        .step {
+            flex: 1;
+            height: 4px;
+            background: var(v.$gray-200);
+            border-radius: 2px;
+            transition: var(v.$transition);
+        }
+
+        .step.active {
+            background: var(v.$primary-color);
+        }
