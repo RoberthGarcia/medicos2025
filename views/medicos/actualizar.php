@@ -1,5 +1,5 @@
-<h1>Registrar Nuevo Médico</h1>
-<p>Completa todos los campos para registrar un nuevo médico en el sistema</p>
+<h1>Actualizar Médico</h1>
+<p>Modifica la información del médico</p>
 
 <a href="/admin/medicos" class="boton boton-verde">Volver a Médicos</a>
 
@@ -18,5 +18,5 @@
 <form class="formulario" method="POST" enctype="multipart/form-data">
     <?php include __DIR__ . '/formulario_medico.php'; ?>
 
-    <input type="submit" value="Registrar Médico" class="boton boton-verde">
+    <input type="submit" value="Actualizar Médico" class="boton boton-verde">
 </form>
