@@ -1,7 +1,8 @@
 /* ===================================
    SISTEMA MÉDICOS OAXACA
-   CSS Profesional y Responsive
+   CSS Profesional y Responsive - CONSOLIDADO
    Colores: Azul médico + Verde confianza
+   Versión: 2.0 - Consolidada
    =================================== */
 
 /* ===================================
@@ -111,6 +112,18 @@ body {
     max-width: var(--ancho-contenido);
     margin: 0 auto;
     padding: var(--espaciado-lg) var(--espaciado-md);
+}
+
+.contenedor-app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.app {
+    width: 95%;
+    max-width: var(--ancho-contenido);
+    margin: 0 auto;
+    padding: var(--espaciado-lg) 0;
 }
 
 .contenedor-formulario {
@@ -246,6 +259,15 @@ legend {
     line-height: 1.5;
 }
 
+/* Small text en campos */
+.campo small {
+    display: block;
+    margin-top: var(--espaciado-xs);
+    color: var(--color-texto-claro);
+    font-size: var(--fuente-tamano-xs);
+    font-style: italic;
+}
+
 /* Checkboxes y radios */
 .campo-checkbox {
     display: flex;
@@ -254,6 +276,7 @@ legend {
     padding: var(--espaciado-sm);
     border-radius: var(--radio-md);
     transition: background-color var(--transicion-normal);
+    margin-bottom: var(--espaciado-md);
 }
 
 .campo-checkbox:hover {
@@ -266,6 +289,7 @@ legend {
     height: 1.25rem;
     cursor: pointer;
     accent-color: var(--color-primario);
+    margin: 0;
 }
 
 .campo-checkbox label {
@@ -273,6 +297,50 @@ legend {
     cursor: pointer;
     font-weight: 500;
     user-select: none;
+}
+
+/* Input de archivos */
+.campo input[type="file"] {
+    padding: 0.75rem;
+    border: 2px dashed var(--color-borde);
+    cursor: pointer;
+}
+
+.campo input[type="file"]:hover {
+    border-color: var(--color-primario);
+    background-color: var(--color-primario-light);
+}
+
+/* Vista previa de imagen */
+.imagen-preview {
+    margin-top: var(--espaciado-md);
+    padding: var(--espaciado-md);
+    border: 1px dashed var(--color-borde);
+    border-radius: var(--radio-md);
+    text-align: center;
+    background-color: var(--color-fondo);
+}
+
+.imagen-preview img {
+    max-width: 200px;
+    height: auto;
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-md);
+}
+
+.imagen-preview p {
+    margin-top: var(--espaciado-sm);
+    color: var(--color-texto-claro);
+    font-size: var(--fuente-tamano-sm);
+}
+
+/* Imagen en tabla */
+.imagen-tabla {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-sm);
 }
 
 /* ===================================
@@ -322,14 +390,36 @@ button[type="submit"]:active {
     width: auto;
     padding: 0.75rem 1.5rem;
     font-size: var(--fuente-tamano-sm);
+    text-transform: none;
 }
 
 .boton-verde-block {
     width: 100%;
+    display: block;
 }
 
 .boton-verde:hover {
     background: #059669;
+    transform: translateY(-2px);
+}
+
+.boton-amarillo,
+.boton-amarillo-block {
+    background: var(--color-advertencia);
+    color: var(--color-texto);
+    width: auto;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--fuente-tamano-sm);
+    text-transform: none;
+}
+
+.boton-amarillo-block {
+    width: 100%;
+    display: block;
+}
+
+.boton-amarillo:hover {
+    background: #e0a800;
     transform: translateY(-2px);
 }
 
@@ -339,10 +429,12 @@ button[type="submit"]:active {
     width: auto;
     padding: 0.75rem 1.5rem;
     font-size: var(--fuente-tamano-sm);
+    text-transform: none;
 }
 
 .boton-rojo-block {
     width: 100%;
+    display: block;
 }
 
 .boton-rojo:hover {
@@ -362,12 +454,13 @@ button[type="submit"]:active {
     padding: var(--espaciado-md);
     border-radius: var(--radio-md);
     margin-bottom: var(--espaciado-sm);
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: var(--espaciado-sm);
     box-shadow: var(--sombra-sm);
     animation: slideDown 0.3s ease-out;
+    font-size: var(--fuente-tamano-sm);
 }
 
 @keyframes slideDown {
@@ -545,6 +638,81 @@ button[type="submit"]:active {
     display: inline-block;
 }
 
+/* Clase de ancho completo */
+.w-100 {
+    width: 100%;
+}
+
+/* ===================================
+   TABS (Sistema de pestañas)
+   =================================== */
+.tabs {
+    display: flex;
+    gap: var(--espaciado-xs);
+    margin-bottom: var(--espaciado-lg);
+    border-bottom: 2px solid var(--color-borde);
+}
+
+.tabs button {
+    background-color: transparent;
+    border: none;
+    color: var(--color-texto-claro);
+    padding: var(--espaciado-sm) var(--espaciado-md);
+    font-weight: 600;
+    font-size: var(--fuente-tamano-sm);
+    cursor: pointer;
+    transition: all var(--transicion-normal);
+    border-bottom: 3px solid transparent;
+    position: relative;
+    bottom: -2px;
+}
+
+.tabs button:hover {
+    color: var(--color-primario);
+    background-color: var(--color-primario-light);
+}
+
+.tabs button.actual {
+    color: var(--color-primario);
+    border-bottom-color: var(--color-primario);
+}
+
+/* ===================================
+   PAGINACIÓN
+   =================================== */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--espaciado-sm);
+    padding: var(--espaciado-xl) 0;
+}
+
+.paginacion button,
+.paginacion a {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-fondo-claro);
+    color: var(--color-primario);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-sm);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transicion-normal);
+    cursor: pointer;
+}
+
+.paginacion button:hover,
+.paginacion a:hover {
+    background-color: var(--color-primario);
+    color: var(--color-fondo-claro);
+}
+
+.paginacion button.actual,
+.paginacion a.actual {
+    background-color: var(--color-primario);
+    color: var(--color-fondo-claro);
+}
+
 /* ===================================
    RESPONSIVE DESIGN
    =================================== */
@@ -586,6 +754,29 @@ button[type="submit"]:active {
     
     fieldset {
         padding: var(--espaciado-md);
+    }
+    
+    /* Botones */
+    .boton-verde,
+    .boton-amarillo,
+    .boton-rojo {
+        width: 100%;
+        margin-bottom: var(--espaciado-xs);
+    }
+    
+    /* Tabs responsive */
+    .tabs {
+        flex-direction: column;
+    }
+    
+    .tabs button {
+        width: 100%;
+        text-align: left;
+    }
+    
+    /* Paginación responsive */
+    .paginacion {
+        flex-wrap: wrap;
     }
     
     /* Tablas responsive */

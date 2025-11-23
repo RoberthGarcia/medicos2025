@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\APIController;
 use Controllers\LoginController;
-use Controllers\MedicoController;
+use Controllers\MedicosController;
 use Controllers\RegistroMedicoController;
 
 $router = new Router();
@@ -60,11 +60,18 @@ $router->post('/medicos/recuperar', [RegistroMedicoController::class, 'recuperar
 // ÁREA PRIVADA - ADMINISTRADOR
 // ====================================
 
-$router->get('/medicos/admin', [MedicoController::class, 'index']);
-$router->get('/medicos/crear', [MedicoController::class, 'crear']);
-$router->get('/medicos/pendientes', [MedicoController::class, 'pendientes']);
-$router->post('/medicos/aprobar', [MedicoController::class, 'aprobar']);
-$router->post('/medicos/rechazar', [MedicoController::class, 'rechazar']);
+// CRUD de Médicos
+$router->get('/medicos/admin', [MedicosController::class, 'index']);
+$router->get('/medicos/crear', [MedicosController::class, 'crear']);
+$router->post('/medicos/crear', [MedicosController::class, 'crear']);
+$router->get('/medicos/actualizar', [MedicosController::class, 'actualizar']);
+$router->post('/medicos/actualizar', [MedicosController::class, 'actualizar']);
+$router->post('/medicos/eliminar', [MedicosController::class, 'eliminar']);
+
+// Sistema de Aprobación de Médicos
+$router->get('/medicos/pendientes', [MedicosController::class, 'pendientes']);
+$router->post('/medicos/aprobar', [MedicosController::class, 'aprobar']);
+$router->post('/medicos/rechazar', [MedicosController::class, 'rechazar']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

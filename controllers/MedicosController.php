@@ -12,9 +12,14 @@ class MedicosController {
      * Mostrar todos los médicos (Admin)
      */
     public static function index(Router $router) {
-        // Proteger ruta (si tienes sistema de autenticación)
-        // session_start();
-        // isAdmin();
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
         
         $medicos = Medico::all();
         $resultado = $_GET['resultado'] ?? null;
@@ -29,9 +34,14 @@ class MedicosController {
      * Crear nuevo médico
      */
     public static function crear(Router $router) {
-        // Proteger ruta
-        // session_start();
-        // isAdmin();
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
         
         $medico = new Medico();
         $alertas = [];
@@ -80,10 +90,12 @@ class MedicosController {
                         $resultado = $medico->guardar();
                         
                         if($resultado['resultado']) {
-                            header('Location: /admin/medicos?resultado=1');
+                            header('Location: /medicos/admin?resultado=1');
                             exit;
                         }
                     }
+                } else {
+                    $alertas['error'][] = 'El email ya está registrado';
                 }
             }
         }
@@ -98,15 +110,20 @@ class MedicosController {
      * Actualizar médico existente
      */
     public static function actualizar(Router $router) {
-        // Proteger ruta
-        // session_start();
-        // isAdmin();
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
         
         $id = $_GET['id'];
         $id = filter_var($id, FILTER_VALIDATE_INT);
         
         if(!$id) {
-            header('Location: /admin/medicos');
+            header('Location: /medicos/admin');
             exit;
         }
         
@@ -114,7 +131,7 @@ class MedicosController {
         $medico = Medico::find($id);
         
         if(!$medico) {
-            header('Location: /admin/medicos');
+            header('Location: /medicos/admin');
             exit;
         }
         
@@ -177,7 +194,7 @@ class MedicosController {
                     $resultado = $medico->guardar();
                     
                     if($resultado) {
-                        header('Location: /admin/medicos?resultado=2');
+                        header('Location: /medicos/admin?resultado=2');
                         exit;
                     }
                 }
@@ -194,9 +211,14 @@ class MedicosController {
      * Eliminar médico
      */
     public static function eliminar() {
-        // Proteger ruta
-        // session_start();
-        // isAdmin();
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
         
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             
@@ -218,7 +240,7 @@ class MedicosController {
                     $resultado = $medico->eliminar();
                     
                     if($resultado) {
-                        header('Location: /admin/medicos?resultado=3');
+                        header('Location: /medicos/admin?resultado=3');
                         exit;
                     }
                 }
@@ -226,7 +248,113 @@ class MedicosController {
         }
         
         // Redireccionar si algo salió mal
-        header('Location: /admin/medicos');
+        header('Location: /medicos/admin');
+        exit;
+    }
+    
+    /**
+     * Mostrar médicos pendientes de aprobación
+     */
+    public static function pendientes(Router $router) {
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
+
+        $medicos_pendientes = Medico::medicosPendientes();
+        $resultado = $_GET['resultado'] ?? null;
+
+        $router->render('medicos/pendientes', [
+            'medicos' => $medicos_pendientes,
+            'resultado' => $resultado
+        ]);
+    }
+
+    /**
+     * Aprobar perfil de médico
+     */
+    public static function aprobar(Router $router) {
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if($id) {
+                // Buscar el médico por id_medico
+                $medico = Medico::find($id);
+                
+                if($medico) {
+                    // Aprobar el perfil
+                    $medico->perfil_verificado = 1;
+                    $medico->activo = 1;
+                    $resultado = $medico->guardar();
+                    
+                    if($resultado) {
+                        header('Location: /medicos/pendientes?resultado=1');
+                        exit;
+                    }
+                }
+            }
+        }
+        
+        // Redireccionar si algo salió mal
+        header('Location: /medicos/pendientes');
+        exit;
+    }
+
+    /**
+     * Rechazar perfil de médico
+     */
+    public static function rechazar(Router $router) {
+        session_start();
+        
+        // Verificar que sea administrador
+        $auth = $_SESSION['admin'] ?? null;
+        if(!$auth) {
+            header('Location: /');
+            exit;
+        }
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if($id) {
+                // Buscar el médico
+                $medico = Medico::find($id);
+                
+                if($medico) {
+                    // Eliminar imagen si existe
+                    if($medico->foto_perfil) {
+                        $imageHandler = new ImageHandler('medicos');
+                        $imageHandler->eliminarImagen($medico->foto_perfil);
+                    }
+                    
+                    // Rechazar = Eliminar el médico
+                    $resultado = $medico->eliminar();
+                    
+                    if($resultado) {
+                        header('Location: /medicos/pendientes?resultado=2');
+                        exit;
+                    }
+                }
+            }
+        }
+        
+        // Redireccionar si algo salió mal
+        header('Location: /medicos/pendientes');
         exit;
     }
 }
